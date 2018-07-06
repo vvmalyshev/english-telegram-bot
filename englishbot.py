@@ -71,6 +71,15 @@ def main():
                             config.loc[config['chat_id'] == chat_id, ['mode']] = 'default'
                         else:
                             textm = 'try it one more time. If you do not know, press no'
+                    
+                    #режим удаления
+                    elif config_id['mode'] == 'delete':
+                        try:
+                            df = df.drop(df[df['word'] == m].index)
+                            textm = 'Слово ( {} ) удалено из словаря'.format(m)
+                        except:
+                            textm = 'Такого слова нет в вашем словаре'
+                        config.loc[config['chat_id'] == chat_id, ['mode']] = 'default'
                     # режим без обучения
                     else:
                         if m == "/study":
@@ -104,7 +113,7 @@ def main():
                             else:
                                 textm = 'You have no words in your dictionary'
                         else:
-                            textm = 'Press /study for traning \n\nOr add a new word: \nFor ex: add money деньги \n\nBot version 1.1'
+                            textm = 'Press /study for traning \n\nOr add a new word: \nFor ex: add money деньги \n\nBot version 1.2'
                     sendm(chat_id, textm)
                     config.to_csv('config.csv', encoding='cp1251', index=False)
                     df.to_csv('dictionary.csv', encoding='cp1251', index=False)
