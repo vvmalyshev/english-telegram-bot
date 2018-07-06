@@ -1,6 +1,7 @@
 ﻿from my_functions import *
 import random
 def main():
+    one = False
     n = 5
     df = pd.read_csv('dictionary.csv', encoding='cp1251', index_col=False)
     config = pd.read_csv('config.csv', encoding='cp1251', index_col=False)
@@ -11,6 +12,8 @@ def main():
         s = get_update()
         
         length = len(s)
+        if length == 0:
+            one = True
         min = time.strftime("%M")
         if min=="00":
             textm = "new hour!"
@@ -21,11 +24,10 @@ def main():
         for i in reversed(range(length)):
             
 
-            if s[i]['update_id']==date_old:
+            if s[i]['update_id']==date_old or one:
 
-                if i!=(length-1):
-
-                    s = s[i+1]                
+                if i!=(length-1) or one:
+                    s = (lambda one: s[i+1] if not one else s[i])(one)
                     update_id = s['update_id']
                     s = s['message']
                     chat_id = s['chat']['id']
@@ -42,7 +44,7 @@ def main():
 
                         # данные о пользователе
                     config_id = config[config['chat_id'] == chat_id].to_dict('records')[0]
-
+                    df_id = df[df['chat_id'] == chat_id]
                     #режим добавления слова
                     if config_id['mode'] == 'add':
                         try:
@@ -60,7 +62,7 @@ def main():
                         last_w = config_id['last_w']
                         lang_w = config_id['lang_w']
                         # определяем правильный ответ и отвечаем пользователю
-                        r_answ = list(df.loc[(df['chat_id'] == chat_id) & ((df['word'] == last_w) | (df['translate'] == last_w))].iloc[:,(lambda lang_w: 1 if lang_w == 0 else 0)(lang_w)])[0]
+                        r_answ = list(df_id.loc[(df['word'] == last_w) | (df['translate'] == last_w)].iloc[:,(lambda lang_w: 1 if lang_w == 0 else 0)(lang_w)])[0]
                         if m == r_answ:
                             textm = "You are right"
                             config.loc[config['chat_id'] == chat_id, ['mode']] = 'default'
@@ -74,16 +76,16 @@ def main():
                     
                     #режим удаления
                     elif config_id['mode'] == 'delete':
-                        try:
+                        if m in df_id.word.values:
                             df = df.drop(df[df['word'] == m].index)
                             textm = 'Слово ( {} ) удалено из словаря'.format(m)
-                        except:
+                        else:
                             textm = 'Такого слова нет в вашем словаре'
                         config.loc[config['chat_id'] == chat_id, ['mode']] = 'default'
                     # режим без обучения
                     else:
                         if m == "/study":
-                            df_study = (df[(df['score'] < n) & (df['chat_id'] == chat_id)])
+                            df_study = (df_id[df['score'] < n])
                             if chat_id in df.chat_id.values and len(df_study)!=0:
                                 # выбираем рандомное слово
                                 df_study = df[(df['score'] < n) & (df['chat_id'] == chat_id)].sample(n=1)
@@ -119,7 +121,8 @@ def main():
                     df.to_csv('dictionary.csv', encoding='cp1251', index=False)
                     with open('last_update_id.txt', 'w') as f:
                         f.write(str(update_id))
-                    date_old = update_id 
+                    date_old = update_id
+                    one = False
                 break
         time.sleep(1)
 if __name__ == "__main__":
