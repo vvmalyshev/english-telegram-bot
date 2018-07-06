@@ -104,7 +104,7 @@ def main():
                             else:
                                 textm = 'You have no words in your dictionary'
                         else:
-                            textm = 'Press /study for traning \n\nOr add a new word: \nFor ex: add money деньги \n\nBot version 1.0'
+                            textm = 'Press /study for traning \n\nOr add a new word: \nFor ex: add money деньги \n\nBot version 1.1'
                     sendm(chat_id, textm)
                     config.to_csv('config.csv', encoding='cp1251', index=False)
                     df.to_csv('dictionary.csv', encoding='cp1251', index=False)
