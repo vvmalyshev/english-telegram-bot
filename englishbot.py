@@ -96,11 +96,13 @@ def main():
                             textm = 'type word what you wanna delete'
                             config.loc[config['chat_id'] == chat_id, ['mode']] = 'delete'
                         elif m == "/mydictionary":
-                            textm = 'Your dictionary: \n\n'
-                            dff = df.loc[df.chat_id == chat_id,['word','translate']]
-                            for index, row in dff.iterrows():
-                                textm = textm + row['word'] + '  ' + row['translate'] + '\n'
-                            
+                            if len(df[df['chat_id'] == chat_id])!=0:
+                                textm = 'Your dictionary: \n\n'
+                                dff = df.loc[df.chat_id == chat_id,['word','translate']]
+                                for index, row in dff.iterrows():
+                                    textm = textm + row['word'] + '  ' + row['translate'] + '\n'
+                            else:
+                                textm = 'You have no words in your dictionary'
                         else:
                             textm = 'Press /study for traning \n\nOr add a new word: \nFor ex: add money деньги \n\nBot version 1.0'
                     sendm(chat_id, textm)
