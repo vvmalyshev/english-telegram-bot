@@ -21,7 +21,7 @@ def sendm(chat_id, textm):
 def sendme(textm):
     requests.get("https://api.telegram.org/bot" + token +"/sendMessage?chat_id=" + str(my_chat_id) + "&" + "text=" + str(textm), proxies=dict(http=proxyt, https=proxyt))
 
-#@retry
+@retry
 def get_update():
 
     s = requests.get("https://api.telegram.org/bot" + token +"/getupdates", proxies=dict(http=proxyt, https=proxyt)).json()
