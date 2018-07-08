@@ -50,7 +50,7 @@ def main():
                     #режим добавления слова
                     if config_id['mode'] == 'add':
                         
-                        if not re.search(eng,new_str[0]) and not re.search(rus, new_str[1]) and len(new_str)>1:
+                        if len(new_str)>1 and not re.search(eng,new_str[0]) and not re.search(rus, new_str[1]):
                             #промеряем на дубликаты
                             if m not in df.word.values:
                                 df = df.append({'word': new_str[0], 'translate': new_str[1], 'score': 0, "chat_id": chat_id}, ignore_index=True)
