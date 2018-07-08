@@ -7,6 +7,7 @@ from retrying import retry
 from my_token import *
 from my_proxy import *
 from my_chat_id import *
+
 def main():
     pass
 @retry
@@ -27,7 +28,7 @@ def get_update():
 
     s = requests.get("https://api.telegram.org/bot" + token +"/getupdates", proxies=dict(http=proxyt, https=proxyt)).json()
     s = s['result']
-    print('3')
+    
     return s
 if __name__ == "__main__":
     main()
