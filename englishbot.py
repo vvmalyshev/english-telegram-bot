@@ -52,11 +52,12 @@ def main():
                             if new_str[0] not in df.word.values:
                                 df = df.append({'word': new_str[0], 'translate': new_str[1], 'score': 0, "chat_id": chat_id}, ignore_index=True)
                                 textm = 'New word ({} : {}) has added'.format(new_str[0],new_str[1])
-                                config.loc[config['chat_id'] == chat_id, ['mode']] = 'default'  
+                                  
                             else:
                                 textm = 'The word has already added'
                         except:
                             textm = 'Something is wrong. \nAdd a new word: \nFor ex: money деньги'
+                        config.loc[config['chat_id'] == chat_id, ['mode']] = 'default'
                     # режим обучения
                     elif config_id['mode'] == 'study':
                         last_w = config_id['last_w']
@@ -78,9 +79,9 @@ def main():
                     elif config_id['mode'] == 'delete':
                         if m in df_id.word.values:
                             df = df.drop(df[df['word'] == m].index)
-                            textm = 'Слово ( {} ) удалено из словаря'.format(m)
+                            textm = 'The word ( {} ) has deleted from your dictionary'.format(m)
                         else:
-                            textm = 'Такого слова нет в вашем словаре'
+                            textm = 'The word does not exist in your dictionary
                         config.loc[config['chat_id'] == chat_id, ['mode']] = 'default'
                     # режим без обучения
                     else:
@@ -98,13 +99,13 @@ def main():
                                 config.loc[config['chat_id'] == chat_id, ['last_w']] = word
                                 config.loc[config['chat_id'] == chat_id, ['lang_w']] = indx
                             else:
-                                textm = "Please, add words for traning"
+                                textm = "You have no words in your dictionary. Type /add for adding new words."
                         # добавляем новое слово
                         elif m == "/add":
-                            textm = 'type new word and translate'
+                            textm = 'Type new word(in english) and translate(in russian)'
                             config.loc[config['chat_id'] == chat_id, ['mode']] = 'add'
                         elif m == "/delete":
-                            textm = 'type word what you wanna delete'
+                            textm = 'Type word(in english) what you wanna delete'
                             config.loc[config['chat_id'] == chat_id, ['mode']] = 'delete'
                         elif m == "/mydictionary":
                             if len(df[df['chat_id'] == chat_id])!=0:
@@ -113,9 +114,9 @@ def main():
                                 for index, row in dff.iterrows():
                                     textm = textm + row['word'] + '  ' + row['translate'] + '\n'
                             else:
-                                textm = 'You have no words in your dictionary'
+                                textm = 'You have no words in your dictionary. Type /add for adding new words.'
                         else:
-                            textm = 'Press /study for traning \n\nOr add a new word: \nFor ex: add money деньги \n\nBot version 1.2'
+                            textm = 'Press /study for traning \n\n      /add for adding new word \n      /delete for deleting word \n      /mydictionary for seeing your dictionary\nBot version 1.3
                     sendm(chat_id, textm)
                     config.to_csv('config.csv', encoding='cp1251', index=False)
                     df.to_csv('dictionary.csv', encoding='cp1251', index=False)
