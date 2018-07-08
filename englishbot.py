@@ -105,7 +105,7 @@ def main():
                                 textm = "You have no words in your dictionary. Type /add for adding new words."
                         # добавляем новое слово
                         elif m == "/add":
-                            textm = 'Type new word(in english) and translation(in russian)'
+                            textm = 'Type new word(in english) and translation(in russian).\n\nFor example:  money деньги'
                             config.loc[config['chat_id'] == chat_id, ['mode']] = 'add'
                         elif m == "/delete":
                             if len(df[df['chat_id'] == chat_id])!=0:
