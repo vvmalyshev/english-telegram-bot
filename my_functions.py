@@ -2,6 +2,7 @@ import time
 import requests, bs4
 import datetime
 import json
+import pandas as pd
 from retrying import retry
 from my_token import *
 from my_proxy import *
