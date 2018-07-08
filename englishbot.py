@@ -6,7 +6,8 @@ def main():
     df = pd.read_csv('dictionary.csv', encoding='cp1251', index_col=False)
     config = pd.read_csv('config.csv', encoding='cp1251', index_col=False)
     date_old = int(date_initial()) 
-    
+    rus = r'[^абвгдеёжзийклмнопрстуфхцчшщъыьэюя]'
+    eng = r'[^abcdefghijklmnopqrstuvwxyz]'
     while True:
         
         s = get_update()
@@ -47,16 +48,17 @@ def main():
                     df_id = df[df['chat_id'] == chat_id]
                     #режим добавления слова
                     if config_id['mode'] == 'add':
-                        try:
+                        
+                        if not re.search(eng,new_str[0]) and not re.search(rus, new_str[1]):
                             #промеряем на дубликаты
-                            if new_str[0] not in df.word.values:
+                            if m not in df.word.values:
                                 df = df.append({'word': new_str[0], 'translate': new_str[1], 'score': 0, "chat_id": chat_id}, ignore_index=True)
                                 textm = 'New word ({} : {}) has added'.format(new_str[0],new_str[1])
                                   
                             else:
                                 textm = 'The word has already added'
-                        except:
-                            textm = 'Something is wrong. \nAdd a new word: \nFor ex: money деньги'
+                        else:
+                            textm = 'Something is wrong. \nPress /add for adding new word(in english) and translation(in russian)'
                         config.loc[config['chat_id'] == chat_id, ['mode']] = 'default'
                     # режим обучения
                     elif config_id['mode'] == 'study':
@@ -64,7 +66,7 @@ def main():
                         lang_w = config_id['lang_w']
                         # определяем правильный ответ и отвечаем пользователю
                         r_answ = list(df_id.loc[(df['word'] == last_w) | (df['translate'] == last_w)].iloc[:,(lambda lang_w: 1 if lang_w == 0 else 0)(lang_w)])[0]
-                        if m == r_answ:
+                        if new_str[0] == r_answ:
                             textm = "You are right"
                             config.loc[config['chat_id'] == chat_id, ['mode']] = 'default'
                             # увеличиваем скор на 1
@@ -73,7 +75,7 @@ def main():
                             textm = 'the right answer: ' + r_answ
                             config.loc[config['chat_id'] == chat_id, ['mode']] = 'default'
                         else:
-                            textm = 'try it one more time. If you do not know, press no'
+                            textm = 'try it one more time. If you do not know, press: no'
                     
                     #режим удаления
                     elif config_id['mode'] == 'delete':
@@ -102,7 +104,7 @@ def main():
                                 textm = "You have no words in your dictionary. Type /add for adding new words."
                         # добавляем новое слово
                         elif m == "/add":
-                            textm = 'Type new word(in english) and translate(in russian)'
+                            textm = 'Type new word(in english) and translation(in russian)'
                             config.loc[config['chat_id'] == chat_id, ['mode']] = 'add'
                         elif m == "/delete":
                             if len(df[df['chat_id'] == chat_id])!=0:
