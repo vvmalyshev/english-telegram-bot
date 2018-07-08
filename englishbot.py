@@ -116,7 +116,7 @@ def main():
                             else:
                                 textm = 'You have no words in your dictionary. Type /add for adding new words.'
                         else:
-                            textm = 'Press /study for traning \n\n      /add for adding new word \n      /delete for deleting word \n      /mydictionary for seeing your dictionary\nBot version 1.3
+                            textm = 'Press /study for traning \n\n      /add for adding new word \n      /delete for deleting word \n      /mydictionary for seeing your dictionary\nBot version 1.3'
                     sendm(chat_id, textm)
                     config.to_csv('config.csv', encoding='cp1251', index=False)
                     df.to_csv('dictionary.csv', encoding='cp1251', index=False)
