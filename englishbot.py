@@ -105,8 +105,11 @@ def main():
                             textm = 'Type new word(in english) and translate(in russian)'
                             config.loc[config['chat_id'] == chat_id, ['mode']] = 'add'
                         elif m == "/delete":
-                            textm = 'Type word(in english) what you wanna delete'
-                            config.loc[config['chat_id'] == chat_id, ['mode']] = 'delete'
+                            if len(df[df['chat_id'] == chat_id])!=0:
+                                textm = 'Type word(in english) what you wanna delete'
+                                config.loc[config['chat_id'] == chat_id, ['mode']] = 'delete'
+                            else:
+                                textm = 'You have no words in your dictionary. Type /add for adding new words.'
                         elif m == "/mydictionary":
                             if len(df[df['chat_id'] == chat_id])!=0:
                                 textm = 'Your dictionary: \n\n'
