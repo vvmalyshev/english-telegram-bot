@@ -81,7 +81,7 @@ def main():
                             df = df.drop(df[df['word'] == m].index)
                             textm = 'The word ( {} ) has deleted from your dictionary'.format(m)
                         else:
-                            textm = 'The word does not exist in your dictionary
+                            textm = 'The word does not exist in your dictionary'
                         config.loc[config['chat_id'] == chat_id, ['mode']] = 'default'
                     # режим без обучения
                     else:
