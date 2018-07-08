@@ -1,5 +1,6 @@
 ﻿from my_functions import *
 import random
+import re
 def main():
     one = False
     n = 5
