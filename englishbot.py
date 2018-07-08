@@ -59,7 +59,7 @@ def main():
                             else:
                                 textm = 'The word has already added'
                         else:
-                            textm = 'Something is wrong. \nPress /add for adding new word(in english) and translation(in russian)'
+                            textm = 'Something is wrong. \nPress /add for adding new word(in english) and translation(in russian).\n\nFor example:  money деньги'
                         config.loc[config['chat_id'] == chat_id, ['mode']] = 'default'
                     # режим обучения
                     elif config_id['mode'] == 'study':
