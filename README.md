@@ -17,7 +17,7 @@ You may add words in your dictionary and train your English vocabulary. Study mo
 ## How does it do?
 
 Bot listen all messages to your bot on api.telegram.org
-After he recognized message which has not answered yet and work with it.
+<br>After he recognized message which has not answered yet and work with it.
 Depending on the message, bot reply appropriately.
 There are two .csv files: dictionary.csv, config.csv
     dictionary.csv contains words, translations for every user, who have unique chat_id.
