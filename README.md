@@ -18,18 +18,18 @@ You may add words in your dictionary and train your English vocabulary. Study mo
 
 Bot listen all messages to your bot on api.telegram.org
 <br>After he recognized message which has not answered yet and work with it.
-Depending on the message, bot reply appropriately.
-There are two .csv files: dictionary.csv, config.csv
-    dictionary.csv contains words, translations for every user, who have unique chat_id.
-    config.csv contains user's information:chat_id, mode of work(study, add, delete, seeing dictionary)
-All adding, changing and deleting work with Pandas library.
-There is full security from wrong typing in any situations
+<br>Depending on the message, bot reply appropriately.
+<br>There are two .csv files: dictionary.csv, config.csv
+<br>    dictionary.csv contains words, translations for every user, who have unique chat_id.
+<br>    config.csv contains user's information:chat_id, mode of work(study, add, delete, seeing dictionary)
+<br>All adding, changing and deleting work with Pandas library.
+<br>There is full security from wrong typing in any situations
 
 ## Installing
 
-First of all, you need install Python 3 and follow libraries: Pandas, Json, Requests, Beautiful Soup 4, Random, Re, Time.
-Also you must fill files: my_proxy.py(your proxy server), my_token.py(token of your telegram bot), my_chat_id(your chat id  in telegram for retranslating you all messages of other people, who use your bot).
-start Englishbot.py
+<br>First of all, you need install Python 3 and follow libraries: Pandas, Json, Requests, Beautiful Soup 4, Random, Re, Time.
+<br>Also you must fill files: my_proxy.py(your proxy server), my_token.py(token of your telegram bot), my_chat_id(your chat id  in telegram for retranslating you all messages of other people, who use your bot).
+<br>start Englishbot.py
 
 ## License
 
