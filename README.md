@@ -24,7 +24,7 @@ Bot listen all messages to your bot on api.telegram.org
 * dictionary.csv contains words, translations for every user, who have unique chat_id.
 * config.csv contains user's information:chat_id, mode of work(study, add, delete, seeing dictionary)
 
-<br>All adding, changing and deleting work with Pandas library.
+All adding, changing and deleting work with Pandas library.
 <br>There is full security from wrong typing in any situations
 
 ## Installing
