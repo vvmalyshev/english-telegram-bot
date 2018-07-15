@@ -8,11 +8,11 @@ You may add words in your dictionary and train your English vocabulary. Study mo
 
 ## What skills I used in this project:
 
-*pandas library
-*regular expressions
-*parsing HTML
-*basic algoritms, cycles, functions
-*exceptions 
+* pandas library
+* regular expressions
+* parsing HTML
+* basic algoritms, cycles, functions
+* exceptions 
 
 ## How does it do?
 
