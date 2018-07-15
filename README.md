@@ -6,6 +6,7 @@ Telegram Bot for learning your English vocabulary.
 
 You may add words in your dictionary and train your English vocabulary. Study mode randomly give you word or translation for answering from your study list. Every word you add has 5 trying to be guessing. After you guess 5 times, word is dropped out from your study list.
 <br>Also you can see all words which you added and delete them.
+
 ## What skills I used in this project:
 
 * pandas library
