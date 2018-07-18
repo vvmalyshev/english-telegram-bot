@@ -38,4 +38,4 @@ All adding, changing and deleting work with Pandas library.
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-## Try my bot on Telegram: @EnglishOnTelegramBot
+## Try my bot on Telegram: <a href="tg://resolve?domain=EnglishOnTelegramBot">@EnglishOnTelegramBot</a>
