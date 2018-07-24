@@ -32,7 +32,7 @@ def main():
                     try:
                         m = s['text'].lower()
                     except KeyError:
-                        m = ''
+                        m = '1'
                     # Проверяем новый клиент или нет. Если да, то вносим в базу.
                     if chat_id not in config.chat_id.values:
                         config = config.append({"chat_id": chat_id, "mode": 0 }, ignore_index=True)
