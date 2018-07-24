@@ -1,1 +1,1 @@
-proxyt = 'your socks5 proxy'
+PROXY = 'your socks5 proxy'

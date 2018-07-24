@@ -1,1 +1,1 @@
-my_chat_id = #your chat_id
+MY_CHAT_ID = #your chat_id
