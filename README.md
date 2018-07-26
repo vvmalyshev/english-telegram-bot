@@ -14,6 +14,7 @@ You may add words in your dictionary and train your English vocabulary. Study mo
 * parsing HTML
 * basic algoritms, cycles, functions
 * exceptions 
+* decorators
 
 ## How does it do?
 
