@@ -63,10 +63,14 @@ def main():
                         # Определяем правильный ответ и отвечаем пользователю.
                         r_answ = list(df_id.loc[(df['word'] == last_w) | (df['translate'] == last_w)].iloc[:,(lambda lang_w: 1 if lang_w == 0 else 0)(lang_w)])[0]
                         if new_str[0] == r_answ:
-                            textm = "You are right"
+                            textm = "You are right\n\nPress:\n\n/study for traning \n/add for adding new word \n/delete for deleting word \n/mydictionary for seeing your dictionary"
                             config.loc[config['chat_id'] == chat_id, ['mode']] = 'default'
                             # Увеличиваем скор на 1.
                             df.loc[(df['chat_id'] == chat_id) & ((df['word'] == last_w) | (df['translate'] == last_w)), ['score']] += 1
+                            # Проверяем есть ли слова угаданные больше, чем N раз. Если есть, то удаляем из словаря.
+                            if list(df[df['score'] == N]['score']):
+                                df = df.drop(df[df['score'] == N].index)
+                                textm = "You are right!\nThe word was guessed %d times.\nIt was excluded from your dictionary.\n\nPress:\n\n/study for traning \n/add for adding new word \n/delete for deleting word \n/mydictionary for seeing your dictionary" % N
                         elif m == 'no':
                             textm = 'the right answer: ' + r_answ
                             config.loc[config['chat_id'] == chat_id, ['mode']] = 'default'
@@ -76,20 +80,19 @@ def main():
                     elif config_id['mode'] == 'delete':
                         if m in df_id.word.values:
                             df = df.drop(df[df['word'] == m].index)
-                            textm = 'The word ( {} ) has deleted from your dictionary'.format(m)
+                            textm = 'The word ( {} ) has deleted from your dictionary\n\nPress:\n\n/study for traning \n/add for adding new word \n/delete for deleting word \n/mydictionary for seeing your dictionary'.format(m)
                         else:
-                            textm = 'The word does not exist in your dictionary'
+                            textm = 'The word does not exist in your dictionary\n\nPress:\n\n/study for traning \n/add for adding new word \n/delete for deleting word \n/mydictionary for seeing your dictionary'
                         config.loc[config['chat_id'] == chat_id, ['mode']] = 'default'
                     # Режим без обучения.
                     else:
                         if m == "/study":
-                            df_study = (df_id[df['score'] < N])
-                            if chat_id in df.chat_id.values and len(df_study)!=0:
+                            if chat_id in df.chat_id.values and len(df_id)!=0:
                                 # Выбираем рандомное слово.
-                                df_study = df[(df['score'] < N) & (df['chat_id'] == chat_id)].sample(n=1)
+                                df_id = df[df['chat_id'] == chat_id].sample(n=1)
                                 # Выбираем рандомно англ или рус.
                                 indx = random.randint(0, 1)
-                                word = list((lambda indx: df_study['word'] if indx == 0 else df_study['translate'])(indx))[0]
+                                word = list((lambda indx: df_id['word'] if indx == 0 else df_id['translate'])(indx))[0]
                                 textm = 'translate this {}'.format(word)
                                 # Включаем режим обучения и запоминаем слово и язык.
                                 config.loc[config['chat_id'] == chat_id, ['mode']] = 'study'
@@ -115,8 +118,9 @@ def main():
                                 dff = df.loc[df.chat_id == chat_id,['word','translate']]
                                 for index, row in dff.iterrows():
                                     textm = textm + row['word'] + '  ' + row['translate'] + '\n'
+                                textm = textm + '\nPress:\n\n/study for traning \n/add for adding new word \n/delete for deleting word \n/mydictionary for seeing your dictionary'
                             else:
-                                textm = 'You have no words in your dictionary. Type /add for adding new words.'
+                                textm = 'You have no words in your dictionary. Type /add for adding new words.\n\nPress:\n\n/study for traning \n/add for adding new word \n/delete for deleting word \n/mydictionary for seeing your dictionary'
                         # Если введено что-то, что не вписывается в сценарий, то отправляем инструкцию
                         else:
                             textm = 'Press:\n\n/study for traning \n/add for adding new word \n/delete for deleting word \n/mydictionary for seeing your dictionary'
